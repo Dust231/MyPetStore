@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: MyPetStore-SSM
+  # 未显式指定 spring.profiles.active 时默认激活 dev
+  profiles:
+    default: dev
+
+mybatis-plus:
+  # XML 映射文件位置，没有 XML 也不会报错
+  mapper-locations: classpath*:mapper/**/*.xml
+  # 递归扫描该包，实体放到 org.csu.mypetstore.entity 下即可自动起别名
+  type-aliases-package: org.csu.mypetstore
+  configuration:
+    # 下划线列名 -> 驼峰属性名
+    map-underscore-to-camel-case: true
+    # 开发期打印 SQL，上线前删除
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      # 主键策略：对应 MySQL 的 AUTO_INCREMENT
+      id-type: auto
+      # 逻辑删除，实体上可用 @TableLogic 单独覆盖
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0

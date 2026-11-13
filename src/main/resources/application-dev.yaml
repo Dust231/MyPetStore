@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # utf8mb4 由服务端决定，这里保证连接使用 UTF-8 传输；serverTimezone 固定东八区
+    url: "jdbc:mysql://localhost:3306/MyPetStore?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true"
+    username: root
+    # 密码不入库：本地通过环境变量 DB_PASSWORD 注入（IDEA 运行配置 -> Environment variables）
+    password: ${DB_PASSWORD:}
+    hikari:
+      pool-name: PetStoreHikariPool
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-timeout: 30000
+      # 每条物理连接建立后执行，保证会话时区与 +08:00 一致
+      connection-init-sql: "SET time_zone = '+08:00'"
+  sql:
+    init:
+      # never：启动阶段不执行 schema.sql / data.sql，不自动建表或导数
+      mode: never
